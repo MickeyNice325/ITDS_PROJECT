@@ -1,0 +1,78 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Noto Sans Thai", sans-serif;
+    background-color: #f8f9fa;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.chat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;   /* จัดข้อความให้อยู่ทางซ้าย */
+    justify-content: flex-start;
+}
+.grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+.chat-messages {
+    word-wrap: break-word;   /* ข้อความจะตัดไปในบรรทัดถัดไป */
+    word-break: break-all;    /* สำหรับข้อความที่ยาวเกินไป ให้ตัดคำเมื่อจำเป็น */
+    max-width: 100%;          /* ไม่ให้ขนาดเกินกว่ากล่อง */
+    overflow: auto;           /* ทำให้เกิดการเลื่อนเมื่อข้อความยาวเกิน */
+    box-sizing: border-box;   /* ป้องกันไม่ให้ขอบล้นออก */
+}
+.grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+.layout-1 {
+    grid-template-areas: "a";
+}
+
+.layout-2 {
+    grid-template-areas: "a b c d";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.layout-3 {
+    grid-template-areas: "a b";
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr;
+}
+
+.layout-4 {
+    grid-template-areas: "a b";
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.layout-5 {
+    grid-template-areas: "a b" "c";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+}

@@ -1,0 +1,13 @@
+body {
+    font-family: "Noto Sans Thai", sans-serif;
+}
+.container {
+    margin-top: 20px; /* ระยะห่างด้านบนของคอนเทนเนอร์ */
+}
+.search-form {
+    display: flex;
+    justify-content: flex-end; /* จัดวางที่ด้านขวา */
+}
+.search-form .input-group {
+    width: 300px; /* กำหนดความกว้างของฟอร์ม */
+}
