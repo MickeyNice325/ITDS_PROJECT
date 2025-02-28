@@ -431,28 +431,28 @@ function getImageFileName($img_id, $conn) {
             var hiddenInputsHtml = '';
 
             if (selectedLayout == '1') {
-                gridHtml += '<div id="grid-1">2160 x 3840 (1)</div>';
+                gridHtml += '<div id="grid-1">1700 x 3840 (1)</div>';
                 imageSelectHtml += generateImageSelectHtml(1);
                 hiddenInputsHtml += '<input type="hidden" name="image_id_1" id="hidden_input_1" >';
             } else if (selectedLayout == '2') {
-                gridHtml += '<div id="grid-1">540 x 3840 (1)</div><div id="grid-2">540 x 3840 (2)</div><div id="grid-3">540 x 3840(3)</div><div id="grid-4">540 x 3840(4)</div>';
+                gridHtml += '<div id="grid-1">425 x 3840 (1)</div><div id="grid-2">425 x 3840 (2)</div><div id="grid-3">425 x 3840(3)</div><div id="grid-4">425 x 3840(4)</div>';
                 imageSelectHtml += generateImageSelectHtml(4);
                 hiddenInputsHtml += '<input type="hidden" name="image_id_1" id="hidden_input_1">';
                 hiddenInputsHtml += '<input type="hidden" name="image_id_2" id="hidden_input_2">';
                 hiddenInputsHtml += '<input type="hidden" name="image_id_3" id="hidden_input_3">';
                 hiddenInputsHtml += '<input type="hidden" name="image_id_4" id="hidden_input_4">';
             } else if (selectedLayout == '3') {
-                gridHtml += '<div id="grid-1">540 x 3840 (1)</div><div id="grid-2">1620 x 3840 (2)</div>';
+                gridHtml += '<div id="grid-1">425 x 3840 (1)</div><div id="grid-2">1275 x 3840 (2)</div>';
                 imageSelectHtml += generateImageSelectHtml(2);
                 hiddenInputsHtml += '<input type="hidden" name="image_id_1" id="hidden_input_1">';
                 hiddenInputsHtml += '<input type="hidden" name="image_id_2" id="hidden_input_2">';
             } else if (selectedLayout == '4') {
-                gridHtml += '<div id="grid-1">1620 x 3840  (1)</div><div id="grid-2">540 x 3840 (2)</div>';
+                gridHtml += '<div id="grid-1">1275 x 3840  (1)</div><div id="grid-2">425 x 3840 (2)</div>';
                 imageSelectHtml += generateImageSelectHtml(2);
                 hiddenInputsHtml += '<input type="hidden" name="image_id_1" id="hidden_input_1">';
                 hiddenInputsHtml += '<input type="hidden" name="image_id_2" id="hidden_input_2">';
             } else if (selectedLayout == '5') {
-                gridHtml += '<div id="grid-1">1080 x 1920(1)</div><div id="grid-2">1080 x 1920(2)</div><div id="grid-3">2160 x 1920(3)</div>';
+                gridHtml += '<div id="grid-1"> 850x 1920(1)</div><div id="grid-2"> 850x 1920(2)</div><div id="grid-3"> 1700x 1920(3)</div>';
                 imageSelectHtml += generateImageSelectHtml(3);
                 hiddenInputsHtml += '<input type="hidden" name="image_id_1" id="hidden_input_1">';
                 hiddenInputsHtml += '<input type="hidden" name="image_id_2" id="hidden_input_2">';

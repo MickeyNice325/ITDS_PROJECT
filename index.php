@@ -2,6 +2,12 @@
 include("backhouse/fn/config.php");
 $sql = "SELECT name, message FROM comment_tb";
 $result = $conn->query($sql);
+
+// ดึงค่าการเปิด/ปิดคอมเมนต์จากตาราง settings
+$query = "SELECT comments_enabled FROM settings LIMIT 1";
+$result = $conn->query($query);
+$row = $result->fetch_assoc();
+$comments_enabled = (int) $row['comments_enabled'];
 ?>
 
 <!DOCTYPE html>
@@ -17,66 +23,80 @@ $result = $conn->query($sql);
     <link href="css/index.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
 </head>
-
+<style>
+        /* ปิด justify-content และ overflow ถ้าเป็น 0 */
+        .news-grid.hidden-style {
+            justify-content: unset !important;
+            overflow: unset !important;
+        }
+    </style>
 <body>
-    <div class="container">
+<div class="container">
         <div class="news-grid">
             <?php include("show_news.php") ?>
         </div>
+
+        <?php if ($comments_enabled == 1) : ?> 
         <div class="chat">
             <div class="chat-header">COMMENT</div>
-            <div class="chat-messages" id="chat-messages">
-           
+            <div class="chat-messages" id="chat-messages"></div>
+            
+            <div class="floating-image" id="floating-image">
+                <img src="backhouse/img/qr/qr.png" alt="Floating Image">
             </div>
         </div>
-        <div class="news-ticker">
-            <div class="ticker-content">
-                <?php foreach ($news_items as $news): ?>
-                    <div class="ticker-item">
-                        <?php echo htmlspecialchars($news['news_detail']); ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
+        <?php endif; ?> 
+
     </div>
 
-    <div class="floating-image" id="floating-image">
-        <img src="backhouse/img/qr/qr.png" alt="Floating Image">
-    </div>
+
 
     <script>
+    // รับค่า comments_enabled จาก PHP
+    let commentsEnabled = <?php echo $comments_enabled; ?>;
 
-    
+    document.addEventListener("DOMContentLoaded", function() {
+        if (commentsEnabled === 0) {
+            let chatSection = document.getElementById('chat-section');
+            let floatingImage = document.getElementById('floating-image');
+            let newsGrid = document.querySelector('.news-grid');
 
-function fetchComments() {
-    fetch('get_comments.php') // ดึงคอมเมนต์จาก PHP
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+            if (chatSection) chatSection.style.display = 'none';
+            if (floatingImage) floatingImage.style.display = 'none';
+            if (newsGrid) {
+                newsGrid.style.justifyContent = 'unset';
+                newsGrid.style.overflow = 'unset';
+            }
         }
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-            throw new Error('Received content is not JSON');
-        }
-        return response.json();
-    })
-    .then(data => {
-        const chatMessages = document.getElementById('chat-messages');
-        chatMessages.innerHTML = ''; // ล้างข้อความเก่า
-
-        // แสดงคอมเมนต์ใหม่
-        data.forEach(comment => {
-            const message = comment.message;
-            chatMessages.innerHTML += `<h3><strong>${comment.name}:</strong> ${message}</h3>`;
-        });
-
-        // เลื่อนให้แสดงคอมเมนต์ใหม่ที่ด้านล่าง
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
     });
-}
+
+    function fetchComments() {
+        fetch('get_comments.php')
+        .then(response => response.json())
+        .then(data => {
+            const chatMessages = document.getElementById('chat-messages');
+            if (!chatMessages) return;
+
+            chatMessages.innerHTML = '';
+
+            data.forEach(comment => {
+                chatMessages.innerHTML += `<h3><strong>${comment.name}:</strong> ${comment.message}</h3>`;
+            });
+
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    <?php if ($comments_enabled == 1) : ?>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetchComments();
+        setInterval(fetchComments, 2000);
+        setInterval(() => {
+            document.getElementById('floating-image').classList.toggle('hidden');
+        }, 5000);
+    });
+    <?php endif; ?>
 
 // เรียกใช้ฟังก์ชันเมื่อหน้าโหลด
 window.onload = function() {
