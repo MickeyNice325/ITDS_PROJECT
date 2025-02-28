@@ -23,13 +23,7 @@ $result = $conn->query($sql);
 <body>
 <div class="container mt-5">
             <a class="btn btn-outline-dark" href="fn/toggle_comments.php" id="toggleComments">
-                <?php 
-                if ($comments_enabled === 0) {
-                    echo 'เปิดคอมเมนต์'; // ถ้าเป็น 0 แสดง "เปิดคอมเมนต์"
-                } else {
-                    echo 'ปิดคอมเมนต์'; // ถ้าเป็น 1 แสดง "ปิดคอมเมนต์"
-                }
-                ?>
+                    เปิดปิดคอมเมนต์
             </a>
     <h2>คอมเมนต์ล่าสุด</h2>
     <form method="POST" action="fn/delete_comments.php" id="delete_form">
