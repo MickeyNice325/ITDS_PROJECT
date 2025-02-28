@@ -5,6 +5,14 @@ include('fn/config.php');
 // ดึงข้อมูลคอมเมนต์จากฐานข้อมูล
 $sql = "SELECT * FROM comment_tb ORDER BY time DESC";
 $result = $conn->query($sql);
+$sql = "SELECT comments_enabled FROM settings LIMIT 1";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_assoc($result);
+
+// ตรวจสอบค่าของ comments_enabled
+$comment_status = $row['comments_enabled'];
+
+$button_text = ($comment_status == 1) ? "ปิดคอมเมนต์" : "เปิดคอมเมนต์";
 ?>
 
 <!DOCTYPE html>
@@ -22,9 +30,9 @@ $result = $conn->query($sql);
 </head>
 <body>
 <div class="container mt-5">
-            <a class="btn btn-outline-dark" href="fn/toggle_comments.php" id="toggleComments">
-                    เปิดปิดคอมเมนต์
-            </a>
+    <a class="btn btn-outline-dark" href="fn/toggle_comments.php" id="toggleComments">
+        <?= $button_text ?>
+    </a>
     <h2>คอมเมนต์ล่าสุด</h2>
     <form method="POST" action="fn/delete_comments.php" id="delete_form">
         <table class="table table-bordered">
