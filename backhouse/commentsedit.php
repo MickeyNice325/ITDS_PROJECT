@@ -3,11 +3,13 @@ include('nav.php');
 include('fn/config.php');
 
 // ดึงข้อมูลคอมเมนต์จากฐานข้อมูล
-$sql = "SELECT * FROM comment_tb ORDER BY time DESC";
-$result = $conn->query($sql);
-$sql = "SELECT comments_enabled FROM settings LIMIT 1";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
+$sql1 = "SELECT * FROM comment_tb ORDER BY time DESC";
+$result_comments = $conn->query($sql1);
+
+$sql2 = "SELECT comments_enabled FROM settings LIMIT 1";
+$result_settings = mysqli_query($conn, $sql2);
+$row = mysqli_fetch_assoc($result_settings);
+
 
 // ตรวจสอบค่าของ comments_enabled
 $comment_status = $row['comments_enabled'];
@@ -40,29 +42,32 @@ $button_text = ($comment_status == 1) ? "ปิดคอมเมนต์" : "�
             <thead>
                 <tr>
                     <th><input type="checkbox" id="select_all"> เลือกทั้งหมด</th>
+                    <th>วันที่</th>
                     <th>เวลา</th>
                     <th>ข้อความคอมเมนต์</th>
                     <th>ชื่อผู้เขียน</th>
                 </tr>
             </thead>
             <tbody>
-                <?php
-                // ตรวจสอบว่ามีข้อมูลในตารางหรือไม่
-                if ($result->num_rows > 0) {
-                    // แสดงผลข้อมูลแต่ละแถว
-                    while($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                                <td><input type='checkbox' name='comments[]' value='" . $row["time"] . "'></td>
-                                <td>" . $row["time"] . "</td>
-                                <td>" . $row["message"] . "</td>
-                                <td>" . $row["name"] . "</td>
-                              </tr>";
-                    }
-                } else {
-                    echo "<tr><td colspan='5'>ไม่พบข้อมูลคอมเมนต์</td></tr>";
-                }
-                ?>
-            </tbody>
+    <?php
+    // ตรวจสอบว่ามีข้อมูลในตารางหรือไม่
+    if ($result_comments->num_rows > 0) {
+        // แสดงผลข้อมูลแต่ละแถว
+        while($row = $result_comments->fetch_assoc()) {
+            echo "<tr>
+                <td><input type='checkbox' name='comments[]' value='" . $row["time"] . "'></td>
+                <td>" . $row["date"] . "</td>
+                <td>" . $row["time"] . "</td>
+                <td>" . $row["message"] . "</td>
+                <td>" . $row["name"] . "</td>
+            </tr>";
+        }
+    } else {
+        echo "<tr><td colspan='4'>ไม่พบข้อมูลคอมเมนต์</td></tr>";
+    }
+    ?>
+</tbody>
+
         </table>
         <button type="button" class="btn btn-danger" id="delete_btn">ลบคอมเมนต์ที่เลือก</button>
     </form>
