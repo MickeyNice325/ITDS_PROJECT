@@ -49,9 +49,47 @@ $comments_enabled = (int) $row['comments_enabled'];
 
     </div>
 
+    <script>
+let lastNewsStats = null; // เก็บค่าล่าสุดของ news_stats
+
+function checkNewsStatus() {
+    fetch('check_news_status.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.news_stats !== undefined) {
+                if (lastNewsStats !== null && data.news_stats !== lastNewsStats) {
+                    location.reload(); // รีโหลดหน้าเมื่อค่ามีการเปลี่ยนแปลง
+                }
+                lastNewsStats = data.news_stats; // อัปเดตค่าล่าสุด
+            }
+        })
+        .catch(error => console.error('Error fetching news status:', error));
+}
+
+// ตรวจสอบค่า news_stats ทุก ๆ 5 วินาที
+setInterval(checkNewsStatus, 5000);
+</script>
+
 
 
     <script>
+        
+        let lastCommentsEnabled = <?php echo $comments_enabled; ?>; // เก็บค่าเริ่มต้นจาก PHP
+
+function checkCommentsStatus() {
+    fetch('check_comments_status.php')
+        .then(response => response.json())
+        .then(data => {
+            if (data.comments_enabled !== lastCommentsEnabled) {
+                location.reload(); // รีโหลดหน้าเมื่อค่ามีการเปลี่ยนแปลง
+            }
+        })
+        .catch(error => console.error('Error fetching comments status:', error));
+}
+
+// ตรวจสอบค่า settings ทุก ๆ 5 วินาที
+setInterval(checkCommentsStatus, 5000);
+
     // รับค่า comments_enabled จาก PHP
     let commentsEnabled = <?php echo $comments_enabled; ?>;
 
