@@ -21,6 +21,7 @@ $comments_enabled = (int) $row['comments_enabled'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="css/index.css" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="img/icon.ico"/>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <style>

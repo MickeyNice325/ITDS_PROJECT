@@ -40,6 +40,7 @@ function getImageFileName($img_id, $conn) {
     <link rel="stylesheet" href="css/bg.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="icon" type="image/ico" href="img/icon.ico"/>
 
 </head>
 <body>

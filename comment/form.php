@@ -6,6 +6,7 @@
     <title>ITDS : Comments</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/ico" href="img/icon.ico"/>
 </head>
 <body>
     <div class="form-container">
